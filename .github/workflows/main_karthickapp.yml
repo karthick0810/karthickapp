@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy JAR app to Azure Web App - karthickapp
- 
+
 on:
   push:
     branches:
@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.war'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,9 +49,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_508471B668C44169A9C6F39B57623219 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C5458DCB9DBD41DD94B3E3122F7B313E }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_80647FF691D6409683A824E5190C4875 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CAF9C6B2C1A44AA59D6F36110E5E0C51 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1FF7CAB4CBAF4C33B38F88DAF2D7737B }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5D136A08D2764DB2AA682DC099AD59B0 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -59,5 +59,5 @@ jobs:
         with:
           app-name: 'karthickapp'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           
