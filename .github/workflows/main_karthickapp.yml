@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - karthickapp
+name: Build and deploy WAR app to Azure Web App - karthickapp
 
 on:
   push:
@@ -39,19 +39,19 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-  
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: java-app 
+          name: java-app
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CAF9C6B2C1A44AA59D6F36110E5E0C51 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1FF7CAB4CBAF4C33B38F88DAF2D7737B }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5D136A08D2764DB2AA682DC099AD59B0 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_ABA7276E6DF94A55A74705C7ECF4BCE3 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5D592373040B408CB2A67E8411DB9EF2 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3222ADC6FD634EEE97E8D8AB4F8D5DB6 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
