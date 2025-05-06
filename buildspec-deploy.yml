@@ -1,0 +1,37 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: "us-east-1"
+    CLUSTER_NAME: "my-eks-cluster"
+    HELM_RELEASE_NAME: "my-app"
+    NAMESPACE: "default"
+
+phases:
+  install:
+    runtime-versions:
+      docker: 20
+    commands:
+      - curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - echo Installing kubectl...
+      - curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      - chmod +x kubectl
+      - mv kubectl /usr/local/bin/
+      - echo Updating kubeconfig...
+      - aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+
+  pre_build:
+    commands:
+      - IMAGE_URI=$(cat imageDetail.json | jq -r '.imageUri')
+      - echo Image URI: $IMAGE_URI
+
+  build:
+    commands:
+      - echo Deploying with Helm...
+      - helm upgrade --install $HELM_RELEASE_NAME ./helm-chart \
+          --namespace $NAMESPACE \
+          --set image.repository=$(echo $IMAGE_URI | cut -d':' -f1) \
+          --set image.tag=$(echo $IMAGE_URI | cut -d':' -f2)
+
+artifacts:
+  files: []
