@@ -2,8 +2,8 @@ version: 0.2
 
 env:
   variables:
-    ECR_REPO: <your-account-id>.dkr.ecr.<region>.amazonaws.com/my-app
-    AWS_REGION: <your-region>
+    AWS_REGION: us-east-1
+    ECR_REPO: 754450290666.dkr.ecr.us-east-1.amazonaws.com/my-app
 
 phases:
   pre_build:
